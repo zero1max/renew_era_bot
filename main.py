@@ -2,14 +2,12 @@ import asyncio
 import logging
 import sys
 
-from database.db_movies import setup_movie
-from database.db_user import setup_user
+from database.db_users import init_db
 from loader import dp, bot
 import handlers
 
 async def main():
-    await setup_movie()
-    await setup_user()
+    init_db()
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
