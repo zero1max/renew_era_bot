@@ -20,7 +20,7 @@ async def start_cmd(message: Message, state: FSMContext):
     await message.answer("Salom! Tarix bo‘yicha viktorinamizga xush kelibsiz!", reply_markup=get_main_keyboard(is_admin))
     await state.set_state(QuizStates.WAITING_FOR_QUIZ_START)
 
-@router_user.message(QuizStates.WAITING_FOR_QUIZ_START, F.text == "Bilimni sinash")
+@router_user.message(QuizStates.WAITING_FOR_QUIZ_START, F.text == "Bilimni sinash📚")
 async def start_quiz(message: Message, state: FSMContext):
     await state.update_data(current_question=0)
     await send_question(message, state)
