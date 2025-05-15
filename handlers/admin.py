@@ -1,6 +1,6 @@
 from aiogram import Router, F
 from aiogram.types import Message
-from database.db_users import get_all_users
+from database.db_users import get_all_users, clear_users
 import os
 from .user import QuizStates
 from loader import router_admin
@@ -25,3 +25,12 @@ async def view_results(message: Message):
         text += f"{i}. @{u[1] or 'Anonymous'} (ID: {u[0]}): ✅ {u[3]}, ❌ {u[4]}\n"
     
     await message.answer(text)  
+
+@router_admin.message(QuizStates.WAITING_FOR_QUIZ_START, F.text == "Clear Results🗑️")
+async def clear_results(message: Message):
+    if message.from_user.id != int(os.getenv("ADMIN_ID", "0")):
+        await message.answer("❌ Sizda bu amalni bajarish huquqi yo‘q.")
+        return
+
+    clear_users()
+    await message.answer("✅ Barcha foydalanuvchi natijalari tozalandi.")

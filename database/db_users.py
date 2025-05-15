@@ -29,3 +29,8 @@ def update_score(user_id, is_correct):
 def get_all_users():
     with sqlite3.connect("quiz.db") as conn:
         return conn.execute("SELECT user_id, username, fullname, total_correct, total_wrong FROM users").fetchall()
+
+def clear_users():
+    with sqlite3.connect("quiz.db") as conn:
+        conn.execute("DELETE FROM users")
+        conn.commit()
